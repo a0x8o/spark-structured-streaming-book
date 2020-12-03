@@ -1,0 +1,375 @@
+# Based on the following mkdocs.yml's:
+# - https://github.com/squidfunk/mkdocs-material/blob/master/mkdocs.yml
+# - https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/mkdocs.yml
+
+site_name: The Internals of Spark Structured Streaming
+site_url: https://jaceklaskowski.github.io/spark-structured-streaming-book/
+site_author: Jacek Laskowski
+site_description: Demystifying inner-workings of Spark Structured Streaming
+
+# https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/
+repo_name: spark-structured-streaming-book
+repo_url: https://github.com/jaceklaskowski/spark-structured-streaming-book
+edit_uri: edit/master/docs/
+
+copyright: |
+  Copyright &copy; 2020 <a href="https://twitter.com/jaceklaskowski" target="_blank" rel="noopener">Jacek Laskowski</a>
+
+theme:
+  name: material
+  language: en
+  icon:
+    logo: material/book-open-page-variant
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.instant
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji
+  # the following two lines don't seem to work on ReadTheDocs
+  # https://github.com/readthedocs/readthedocs.org/issues/6889
+  #     emoji_index: !!python/name:materialx.emoji.twemoji
+  #     emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed
+  - pymdownx.tilde
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+  - git-revision-date:
+      enabled_if_env: CI
+  - awesome-pages
+  - macros
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/jaceklaskowski
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/jaceklaskowski
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/in/jaceklaskowski
+  spark:
+    version: 3.0.1
+    github: https://github.com/apache/spark/blob/v3.0.1
+  hadoop:
+    version: 3.2.0
+    api: https://hadoop.apache.org/docs/r3.2.0/api
+  java:
+    version: 11
+    docs: https://docs.oracle.com/en/java/javase/11/docs
+    api: https://docs.oracle.com/en/java/javase/11/docs/api
+  kafka:
+    version: 2.4.1
+    api: http://kafka.apache.org/2.4.1/javadoc
+  scala:
+    version: 2.12.2
+    api: https://www.scala-lang.org/api/2.12.2
+  book:
+    spark_core: https://books.japila.pl/apache-spark-internals
+    spark_sql: https://jaceklaskowski.github.io/mastering-spark-sql-book
+
+google_analytics:
+  - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_KEY"]
+  - auto
+
+nav:
+  - Home:
+    - Welcome: index.md
+    - Spark Structured Streaming and Streaming Queries: spark-structured-streaming.md
+    - StreamingQuery: StreamingQuery.md
+    - Configuration Properties: configuration-properties.md
+    - Batch Processing Time: spark-structured-streaming-batch-processing-time.md
+    - Internals of Streaming Queries: spark-structured-streaming-internals.md
+    - DataSource: DataSource.md
+    - SparkDataStream: SparkDataStream.md
+    - SupportsAdmissionControl: SupportsAdmissionControl.md
+    - MicroBatchStream: MicroBatchStream.md
+    - ContinuousStream: ContinuousStream.md
+    - Trigger: Trigger.md
+    - Streaming Join:
+      - Streaming Join: spark-sql-streaming-join.md
+      - StateStoreAwareZipPartitionsRDD: StateStoreAwareZipPartitionsRDD.md
+      - SymmetricHashJoinStateManager:
+        - SymmetricHashJoinStateManager: SymmetricHashJoinStateManager.md
+        - StateStoreHandler: spark-sql-streaming-StateStoreHandler.md
+        - KeyToNumValuesStore: spark-sql-streaming-KeyToNumValuesStore.md
+        - KeyWithIndexToValueStore: spark-sql-streaming-KeyWithIndexToValueStore.md
+      - OneSideHashJoiner: OneSideHashJoiner.md
+      - JoinStateWatermarkPredicates: spark-sql-streaming-JoinStateWatermarkPredicates.md
+      - JoinStateWatermarkPredicate: spark-sql-streaming-JoinStateWatermarkPredicate.md
+      - StateStoreAwareZipPartitionsHelper:
+        - StateStoreAwareZipPartitionsHelper: spark-sql-streaming-StateStoreAwareZipPartitionsHelper.md
+        - StreamingSymmetricHashJoinHelper: StreamingSymmetricHashJoinHelper.md
+        - StreamingJoinHelper: StreamingJoinHelper.md
+    - Streaming Aggregation:
+      - Streaming Aggregation: streaming-aggregation.md
+      - StateStoreRDD: StateStoreRDD.md
+      - StateStoreOps: StateStoreOps.md
+      - StreamingAggregationStateManager: StreamingAggregationStateManager.md
+      - StreamingAggregationStateManagerBaseImpl: StreamingAggregationStateManagerBaseImpl.md
+      - StreamingAggregationStateManagerImplV1: StreamingAggregationStateManagerImplV1.md
+      - StreamingAggregationStateManagerImplV2: StreamingAggregationStateManagerImplV2.md
+    - Stateful Stream Processing:
+      - Stateful Stream Processing: spark-sql-streaming-stateful-stream-processing.md
+      - Streaming Watermark: streaming-watermark.md
+      - Streaming Deduplication: spark-sql-streaming-deduplication.md
+      - Streaming Limit: spark-sql-streaming-limit.md
+      - StateStore:
+        - StateStore: StateStore.md
+        - StateStoreId: spark-sql-streaming-StateStoreId.md
+        - HDFSBackedStateStore: HDFSBackedStateStore.md
+      - StateStoreProvider:
+        - StateStoreProvider: spark-sql-streaming-StateStoreProvider.md
+        - StateStoreProviderId: spark-sql-streaming-StateStoreProviderId.md
+        - HDFSBackedStateStoreProvider: HDFSBackedStateStoreProvider.md
+      - StateStoreCoordinator:
+        - StateStoreCoordinator: StateStoreCoordinator.md
+        - StateStoreCoordinatorRef: StateStoreCoordinatorRef.md
+      - WatermarkSupport: WatermarkSupport.md
+      - StatefulOperatorStateInfo: StatefulOperatorStateInfo.md
+      - StateStoreMetrics: spark-sql-streaming-StateStoreMetrics.md
+      - StateStoreCustomMetric: spark-sql-streaming-StateStoreCustomMetric.md
+      - StateStoreUpdater: spark-sql-streaming-StateStoreUpdater.md
+      - EventTimeStatsAccum: EventTimeStatsAccum.md
+      - EventTimeStats: EventTimeStats.md
+      - StateStoreConf: StateStoreConf.md
+    - Arbitrary Stateful Streaming Aggregation:
+      - Arbitrary Stateful Streaming Aggregation: arbitrary-stateful-streaming-aggregation.md
+      - KeyValueGroupedDataset:
+        - KeyValueGroupedDataset: KeyValueGroupedDataset.md
+        - mapGroupsWithState Operator: spark-sql-streaming-KeyValueGroupedDataset-mapGroupsWithState.md
+        - flatMapGroupsWithState Operator: spark-sql-streaming-KeyValueGroupedDataset-flatMapGroupsWithState.md
+      - GroupState:
+        - GroupState: GroupState.md
+        - GroupStateImpl: GroupStateImpl.md
+      - GroupStateTimeout: spark-sql-streaming-GroupStateTimeout.md
+      - StateManager:
+        - StateManager: spark-sql-streaming-StateManager.md
+        - StateManagerImplV2: spark-sql-streaming-StateManagerImplV2.md
+        - StateManagerImplBase: spark-sql-streaming-StateManagerImplBase.md
+        - StateManagerImplV1: spark-sql-streaming-StateManagerImplV1.md
+      - FlatMapGroupsWithStateExecHelper Helper Class: spark-sql-streaming-FlatMapGroupsWithStateExecHelper.md
+      - InputProcessor: InputProcessor.md
+    - StreamingQueryManager: StreamingQueryManager.md
+    - StreamingQueryListenerBus: StreamingQueryListenerBus.md
+    - Developer-Facing APIs:
+      - DataStreamReader: DataStreamReader.md
+      - DataStreamWriter: DataStreamWriter.md
+      - OutputMode: OutputMode.md
+      - window Function: spark-sql-streaming-window.md
+    - Query Execution:
+      - StreamExecution: StreamExecution.md
+      - IncrementalExecution: IncrementalExecution.md
+      - TriggerExecutor: TriggerExecutor.md
+      - StreamingQueryWrapper: StreamingQueryWrapper.md
+    - StreamMetadata: StreamMetadata.md
+    - Logical Operators:
+      - EventTimeWatermark: logical-operators/EventTimeWatermark.md
+      - FlatMapGroupsWithState: logical-operators/FlatMapGroupsWithState.md
+      - Deduplicate: logical-operators/Deduplicate.md
+      - StreamingDataSourceV2Relation: logical-operators/StreamingDataSourceV2Relation.md
+      - StreamingRelation: logical-operators/StreamingRelation.md
+      - StreamingRelationV2: logical-operators/StreamingRelationV2.md
+      - StreamingExecutionRelation: logical-operators/StreamingExecutionRelation.md
+    - Physical Operators:
+      - MicroBatchScanExec: physical-operators/MicroBatchScanExec.md
+      - EventTimeWatermarkExec: physical-operators/EventTimeWatermarkExec.md
+      - FlatMapGroupsWithStateExec: physical-operators/FlatMapGroupsWithStateExec.md
+      - StatefulOperator: physical-operators/StatefulOperator.md
+      - StateStoreReader: physical-operators/StateStoreReader.md
+      - StateStoreRestoreExec: physical-operators/StateStoreRestoreExec.md
+      - StateStoreSaveExec: physical-operators/StateStoreSaveExec.md
+      - StateStoreWriter: physical-operators/StateStoreWriter.md
+      - StreamingDeduplicateExec: physical-operators/StreamingDeduplicateExec.md
+      - StreamingGlobalLimitExec: physical-operators/StreamingGlobalLimitExec.md
+      - StreamingRelationExec: physical-operators/StreamingRelationExec.md
+      - StreamingSymmetricHashJoinExec: physical-operators/StreamingSymmetricHashJoinExec.md
+    - Execution Planning Strategies:
+      - FlatMapGroupsWithStateStrategy: FlatMapGroupsWithStateStrategy.md
+      - StatefulAggregationStrategy: StatefulAggregationStrategy.md
+      - StreamingDeduplicationStrategy: StreamingDeduplicationStrategy.md
+      - StreamingGlobalLimitStrategy: StreamingGlobalLimitStrategy.md
+      - StreamingJoinStrategy: StreamingJoinStrategy.md
+      - StreamingRelationStrategy: StreamingRelationStrategy.md
+    - Offsets and Metadata Checkpointing:
+      - Offsets and Metadata Checkpointing: offsets-and-metadata-checkpointing.md
+      - MetadataLog: MetadataLog.md
+      - HDFSMetadataLog: HDFSMetadataLog.md
+      - CommitLog:
+        - CommitLog: CommitLog.md
+        - CommitMetadata: CommitMetadata.md
+      - OffsetSeqLog:
+        - OffsetSeqLog: OffsetSeqLog.md
+        - OffsetSeq: OffsetSeq.md
+      - OffsetSeqMetadata: OffsetSeqMetadata.md
+      - CheckpointFileManager:
+        - CheckpointFileManager: CheckpointFileManager.md
+        - FileContextBasedCheckpointFileManager: FileContextBasedCheckpointFileManager.md
+        - FileSystemBasedCheckpointFileManager: FileSystemBasedCheckpointFileManager.md
+        - Offset: Offset.md
+        - StreamProgress: StreamProgress.md
+    - Micro-Batch Stream Processing:
+      - Micro-Batch Stream Processing: micro-batch-stream-processing.md
+      - MicroBatchExecution:
+        - MicroBatchExecution: MicroBatchExecution.md
+        - MicroBatchWriter: spark-sql-streaming-MicroBatchWriter.md
+        - MicroBatchReader: spark-sql-streaming-MicroBatchReader.md
+      - Source:
+        - Source: Source.md
+        - StreamSourceProvider: StreamSourceProvider.md
+      - Sink: Sink.md
+      - StreamSinkProvider: StreamSinkProvider.md
+      - WatermarkTracker: WatermarkTracker.md
+    - Continuous Stream Processing:
+      - Continuous Stream Processing: continuous-stream-processing.md
+      - ContinuousExecution: ContinuousExecution.md
+      - ContinuousReadSupport: ContinuousReadSupport.md
+      - ContinuousReader: spark-sql-streaming-ContinuousReader.md
+      - RateStreamContinuousReader: spark-sql-streaming-RateStreamContinuousReader.md
+      - EpochCoordinator:
+        - EpochCoordinator RPC Endpoint: spark-sql-streaming-EpochCoordinator.md
+        - EpochCoordinatorRef: spark-sql-streaming-EpochCoordinatorRef.md
+        - EpochTracker: spark-sql-streaming-EpochTracker.md
+      - ContinuousQueuedDataReader:
+        - ContinuousQueuedDataReader: spark-sql-streaming-ContinuousQueuedDataReader.md
+        - DataReaderThread: spark-sql-streaming-ContinuousQueuedDataReader-DataReaderThread.md
+        - EpochMarkerGenerator: spark-sql-streaming-ContinuousQueuedDataReader-EpochMarkerGenerator.md
+      - PartitionOffset: spark-sql-streaming-PartitionOffset.md
+      - ContinuousExecutionRelation: ContinuousExecutionRelation.md
+      - WriteToContinuousDataSource: WriteToContinuousDataSource.md
+      - WriteToContinuousDataSourceExec:
+        - WriteToContinuousDataSourceExec Unary Physical Operator: spark-sql-streaming-WriteToContinuousDataSourceExec.md
+        - ContinuousWriteRDD: spark-sql-streaming-ContinuousWriteRDD.md
+      - ContinuousDataSourceRDD: spark-sql-streaming-ContinuousDataSourceRDD.md
+    - UnsupportedOperationChecker: UnsupportedOperationChecker.md
+    - Extending Structured Streaming with New Data Sources: spark-sql-streaming-extending-new-data-sources.md
+    - SQLConf: SQLConf.md
+  - Streaming Operators:
+    - Streaming Operators: operators/index.md
+    - crossJoin: operators/crossJoin.md
+    - dropDuplicates: operators/dropDuplicates.md
+    - explain: operators/explain.md
+    - flatMapGroupsWithState: operators/flatMapGroupsWithState.md
+    - groupBy: operators/groupBy.md
+    - groupByKey: operators/groupByKey.md
+    - join: operators/join.md
+    - joinWith: operators/joinWith.md
+    - withWatermark: operators/withWatermark.md
+    - writeStream: operators/writeStream.md
+  - Data Sources:
+    - Data Sources: datasources/index.md
+    - File:
+      - File Data Source: datasources/file/index.md
+      - FileStreamSource: datasources/file/FileStreamSource.md
+      - FileStreamSink: datasources/file/FileStreamSink.md
+      - CompactibleFileStreamLog: datasources/file/CompactibleFileStreamLog.md
+      - SinkFileStatus: datasources/file/SinkFileStatus.md
+      - ManifestFileCommitProtocol: datasources/file/ManifestFileCommitProtocol.md
+      - MetadataLogFileIndex: datasources/file/MetadataLogFileIndex.md
+      - FileStreamSourceCleaner: datasources/file/FileStreamSourceCleaner.md
+      - FileStreamSourceLog: datasources/file/FileStreamSourceLog.md
+      - FileStreamSinkLog: datasources/file/FileStreamSinkLog.md
+    - Kafka:
+      - Kafka Data Source: datasources/kafka/index.md
+      - KafkaSourceProvider: datasources/kafka/KafkaSourceProvider.md
+      - KafkaMicroBatchStream: datasources/kafka/KafkaMicroBatchStream.md
+      - KafkaTable: datasources/kafka/KafkaTable.md
+      - KafkaSource: datasources/kafka/KafkaSource.md
+      - KafkaRelation: datasources/kafka/KafkaRelation.md
+      - KafkaSourceRDD: datasources/kafka/KafkaSourceRDD.md
+      - CachedKafkaConsumer: datasources/kafka/CachedKafkaConsumer.md
+      - KafkaSourceOffset: datasources/kafka/KafkaSourceOffset.md
+      - KafkaOffsetReader: datasources/kafka/KafkaOffsetReader.md
+      - ConsumerStrategy: datasources/kafka/ConsumerStrategy.md
+      - KafkaSink: datasources/kafka/KafkaSink.md
+      - KafkaBatch: datasources/kafka/KafkaBatch.md
+      - KafkaScan: datasources/kafka/KafkaScan.md
+      - KafkaOffsetRangeLimit: datasources/kafka/KafkaOffsetRangeLimit.md
+      - KafkaDataConsumer: datasources/kafka/KafkaDataConsumer.md
+      - KafkaMicroBatchReader:
+        - KafkaMicroBatchReader: datasources/kafka/KafkaMicroBatchReader.md
+        - KafkaOffsetRangeCalculator: datasources/kafka/KafkaOffsetRangeCalculator.md
+        - KafkaMicroBatchInputPartition: datasources/kafka/KafkaMicroBatchInputPartition.md
+        - KafkaMicroBatchInputPartitionReader: datasources/kafka/KafkaMicroBatchInputPartitionReader.md
+        - KafkaSourceInitialOffsetWriter: datasources/kafka/KafkaSourceInitialOffsetWriter.md
+      - KafkaContinuousReader:
+        - KafkaContinuousReader: datasources/kafka/KafkaContinuousReader.md
+        - KafkaContinuousInputPartition: datasources/kafka/KafkaContinuousInputPartition.md
+    - Socket:
+      - TextSocketSourceProvider: spark-sql-streaming-TextSocketSourceProvider.md
+      - TextSocketSource: spark-sql-streaming-TextSocketSource.md
+    - Rate:
+      - RateSourceProvider: spark-sql-streaming-RateSourceProvider.md
+      - RateStreamProvider: spark-sql-streaming-RateStreamProvider.md
+      - RateStreamSource: spark-sql-streaming-RateStreamSource.md
+      - RateStreamMicroBatchReader: spark-sql-streaming-RateStreamMicroBatchReader.md
+    - Console Sink:
+      - ConsoleSinkProvider: spark-sql-streaming-ConsoleSinkProvider.md
+      - ConsoleWriter: spark-sql-streaming-ConsoleWriter.md
+    - Foreach Sink:
+      - ForeachWriterProvider: datasources/ForeachWriterProvider.md
+      - ForeachWriter: datasources/ForeachWriter.md
+      - ForeachSink: datasources/ForeachSink.md
+    - ForeachBatch Sink:
+      - ForeachBatchSink: datasources/ForeachBatchSink.md
+    - Memory:
+      - Memory Data Source: datasources/memory/index.md
+      - MemoryStream: datasources/memory/MemoryStream.md
+      - ContinuousMemoryStream: datasources/memory/ContinuousMemoryStream.md
+      - MemorySink: datasources/memory/MemorySink.md
+      - MemorySinkV2:
+        - MemorySinkV2: datasources/memory/MemorySinkV2.md
+        - MemoryStreamWriter: spark-sql-streaming-MemoryStreamWriter.md
+      - MemoryStreamBase: datasources/memory/MemoryStreamBase.md
+      - MemorySinkBase: datasources/memory/MemorySinkBase.md
+      - MemoryPlan: datasources/memory/MemoryPlan.md
+  - Monitoring:
+    - StreamingQueryListener: monitoring/StreamingQueryListener.md
+    - ProgressReporter: monitoring/ProgressReporter.md
+    - StreamingQueryProgress:
+      - StreamingQueryProgress: monitoring/StreamingQueryProgress.md
+      - StateOperatorProgress: monitoring/StateOperatorProgress.md
+      - ExecutionStats: monitoring/ExecutionStats.md
+      - SourceProgress: monitoring/SourceProgress.md
+      - SinkProgress: monitoring/SinkProgress.md
+    - StreamingQueryStatus: monitoring/StreamingQueryStatus.md
+    - MetricsReporter: monitoring/MetricsReporter.md
+    - Logging: spark-logging.md
+  - Web UI:
+    - Web UI: webui.md
+  - Demos:
+    - Internals of FlatMapGroupsWithStateExec Physical Operator: demo/spark-sql-streaming-demo-FlatMapGroupsWithStateExec.md
+    - Arbitrary Stateful Streaming Aggregation with KeyValueGroupedDataset.flatMapGroupsWithState Operator: demo/arbitrary-stateful-streaming-aggregation-flatMapGroupsWithState.md
+    - Exploring Checkpointed State: demo/exploring-checkpointed-state.md
+    - Streaming Watermark with Aggregation in Append Output Mode: demo/watermark-aggregation-append.md
+    - Streaming Query for Running Counts (Socket Source and Complete Output Mode): demo/groupBy-running-count-complete.md
+    - Streaming Aggregation with Kafka Data Source: demo/kafka-data-source.md
+    - groupByKey Streaming Aggregation in Update Mode: demo/groupByKey-count-Update.md
+    - StateStoreSaveExec with Complete Output Mode: demo/StateStoreSaveExec-Complete.md
+    - StateStoreSaveExec with Update Output Mode: demo/StateStoreSaveExec-Update.md
+    - Developing Custom Streaming Sink (and Monitoring SQL Queries in web UI): demo/custom-sink-webui.md
+    - current_timestamp Function For Processing Time in Streaming Queries: demo/current_timestamp.md
+    - Using StreamingQueryManager for Query Termination Management: demo/StreamingQueryManager-awaitAnyTermination-resetTerminated.md
+    - Using File Streaming Source: demo/using-file-streaming-source.md
+    - Deep Dive into FileStreamSink: demo/deep-dive-into-filestreamsink.md
